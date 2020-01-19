@@ -1,0 +1,16 @@
+#general:
+#  artifacts:
+#    - "target" # files, relative to the build directory
+#machine:
+#  java:
+#    version: oraclejdk6
+#  environment:
+#    UOM_VERSION: 0.8-SNAPSHOT
+test:
+   override:
+     - mvn install
+   post:
+     - mvn deploy -Dmaven.test.skip -s settings.xml
+     - mvn test jacoco:report coveralls:report -DsourceEncoding=UTF-8
+ #    - mvn site-deploy -Dmaven.test.skip -s settings.xml
+ # GitHub currently has a bug preventing to publish this automatically (triggers "abuse detection mechanism" ;-|) but it works fairly well if the goal is called manually
